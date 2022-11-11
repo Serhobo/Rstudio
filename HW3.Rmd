@@ -1,0 +1,108 @@
+---
+title: "HW3"
+author: "Chris Richardson"
+date: "2022-11-11"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The below chunk of code allow me to handle an error with the parathyroidSE package. When attempting to install it, I was notifed with:
+  Warning in install.packages :
+    package ‘parathyroidSE’ is not available for this version of R
+  
+  A version of this package for your version of R might be available elsewhere,
+  see the ideas at
+  https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages
+
+I found the suggest solution at: https://bioconductor.org/packages/release/data/experiment/html/parathyroidSE.html
+This same solution was applied to all packages that did not install ininitally. 
+
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("parathyroidSE")
+```
+```{r}
+BiocManager::install("DESeq2")
+```
+
+```{r}
+BiocManager::install("airway")
+```
+
+```{r}
+BiocManager::install("apeglm")
+```
+
+```{r}
+BiocManager::install("EnhancedVolcano")
+```
+
+```{r}
+BiocManager::install("AnnotationDbi")
+```
+
+```{r}
+BiocManager::install("org.Hs.eg.db")a
+```
+
+```{r}
+BiocManager::install("goseq")
+```
+
+```{r}
+require(parathyroidSE)
+data(parathyroidGenesSE)
+parathyroidGenesSE
+```
+
+
+```{r }
+require(DESeq2)
+require(airway)
+require(pheatmap)
+require(ggplot2)
+require(apeglm)
+require(EnhancedVolcano)
+require(AnnotationDbi)
+require(org.Hs.eg.db)
+require(goseq)
+require(tidyverse)
+require(gplots)
+require(data.table)
+```
+
+```{r}
+require(parathyroidSE)
+data(parathyroidGenesSE)
+patterns <- c("0$", "3$", "5$", "7$")
+se <- parathyroidGenesSE
+data(airway)
+te <- airway
+sedf <- as.data.frame(colData(se))
+sedf
+patterns
+```
+
+se2 <- parathyroidGenesSE[(parathyroidGenesSE$sample %in%"SRS[0-9][0-9][0-9][0-9][0-9]5","SRS[0-9][0-9][0-9][0-9][0-9]3","SRS[0-9][0-9][0-9][0-9][0-9]0","SRS[0-9][0-9][0-9][0-9][0-9]7
+
+, sedf$sample ==  "3$" , sedf$sample ==  "5$" , sedf$sample ==  "7$"
+
+```{r}
+library(dplyr)
+sedf$sample
+sedf2  <- sedf %>% filter(sample ==  "6$")
+#sedf2 <- sedf[sedf$sample %in% c("0$"),]
+sedf2
+dds <- DESeqDataSet(se,design = ~ patient + treatment + time)
+dds
+design(dds)
+```
+```{r}
+se
+```
+
